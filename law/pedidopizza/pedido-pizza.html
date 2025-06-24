@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Pizza</title>
+</head>
+<body>
+    <h1>Formulário de Pedido de pizza</h1>
+    <p>Preencha seus dados e escolha seu pedido!</p>
+    <br/>
+    <p>Dados do cliente</p>
+    <form action="pedido-pizza.html" method="post">
+        <input type="text" placeholder="Nome completo" required>
+        <br/>
+        <input type="email" placeholder="E-mail" required>
+        <br/>
+        <input type="text" placeholder="Telefone" required>
+        <br/>
+        <textarea type="textarea" placeholder="observações"></textarea>
+        <p>Dados da pizza</p>
+        <p>Tamanho:</p>
+        <input type="radio" id="tamanho" name="tamanho" value="pequena">
+        <label for="tamanho">Pequena</label>
+        <br/>
+        <input type="radio" id="tamanho" name="tamanho" value="media">
+        <label for="tamanho">Média</label>
+        <br/>
+        <input type="radio" id="tamanho" name="tamanho" value="grande">
+        <label for="tamanho">Grande</label>
+        <br/>
+        <p>Sabores (pode escolher mais de um):</p>
+        <input type="checkbox" id="sabor" name="sabor" value="Margherita">
+        <label for="sabor">Margherita</label>
+        <br/>
+        <input type="checkbox" id="sabor" name="sabor" value="Calabresa">
+        <label for="sabor">Calabresa</label>
+        <br/>
+        <input type="checkbox" id="sabor" name="sabor" value="Frango com catupiry">
+        <label for="sabor">Frango com catupiry</label>
+        <br/>
+        <input type="checkbox" id="sabor" name="sabor" value="Portuguesa">
+        <label for="sabor">Portuguesa</label>
+        <br/>
+        <input type="checkbox" id="sabor" name="sabor" value="Quatro queijos">
+        <label for="sabor">Quatro queijos</label>
+        <p>Borda recheada?</p>
+        <input type="radio" id="borda" name="borda" value="sim">
+        <label for="borda">Sim</label>
+        <br/>
+        <input type="radio" id="borda" name="borda" value="nao">
+        <label for="borda">Não</label>
+        <p>Bebida:</p>
+        <select id="bebida">
+             <option value="nenhuma">Nenhuma</option>
+             <option value="refrigerante">Refrigerante</option>
+             <option value="suco">Suco</option>
+            <option value="agua">Água</option>
+        </select>
+        <p>instruções para entrega:</p>
+        <textarea type="textarea" placeholder="instruções para entrega"></textarea>
+        <br/>
+        <submit value="Enviar pedido">
+        <input type="submit" value="Enviar pedido" onclick="return confirm('Deseja confirmar o pedido?')">
+        <button type="reset">Limpar</button>
+        <br/>
+        <footer>
+            Este site é ficticio e foi criado para fins educacionais.
+        </footer>
+    </form>
+</body>
+</html>

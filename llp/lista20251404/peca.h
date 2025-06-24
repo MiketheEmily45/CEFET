@@ -1,0 +1,9 @@
+#define CORNENHUMA 0
+#define CORBRANCA 1
+#define CORPRETA 2
+#define PECAPEAO 1
+#define PECABISPO 3   
+#define PECACAVALO 3  
+#define PECATORRE 5
+#define PECADAMA 9
+#define PECAREI 50
