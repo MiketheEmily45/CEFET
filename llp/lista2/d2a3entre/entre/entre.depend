@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1710700654 source:/home/miguel/Documentos/deveres/d2a3entre/entre/main.c
+	<stdio.h>
+	<stdlib.h>
+

@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1710767131 source:/home/miguel/Documentos/deveres/d3a5triangulo/triangulo/main.c
+	<stdio.h>
+	<stdlib.h>
+	<stdbool.h>
+

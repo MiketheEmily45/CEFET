@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1712775422 source:/home/miguel/Documentos/deveres/d5a1intervaloint/d5a1intervaloint/main.c
+	<stdio.h>
+	<stdlib.h>
+

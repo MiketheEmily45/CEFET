@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1710701196 source:/home/miguel/Documentos/deveres/d2a4salario/salario/main.c
+	<stdio.h>
+	<stdlib.h>
+

@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1709557624 source:/home/miguel/Documentos/deveres/d1a6distancia/distancia/main.c
+	<stdio.h>
+	<stdlib.h>
+

@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1721054621 source:/home/miguel/Documentos/aulas/l2a1/contagem/main.c
+	<stdio.h>
+	<stdlib.h>
+

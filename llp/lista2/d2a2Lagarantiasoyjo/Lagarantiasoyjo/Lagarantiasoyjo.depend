@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1710699085 source:/home/miguel/Documentos/deveres/d2a2Lagarantiasoyjo/Lagarantiasoyjo/main.c
+	<stdio.h>
+	<stdlib.h>
+
