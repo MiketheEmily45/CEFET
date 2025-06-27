@@ -1,0 +1,25 @@
+#include <iostream>
+#include <cmath>
+#include <stdlib.h>
+#include <time.h>
+
+using namespace std;
+
+int main()
+{
+    srand(time(NULL));
+
+    int numero = 3 + (rand() % 13);
+    int chocolates[numero];
+    
+    
+    for (int i = numero - 1; i >= 0; i--) {
+        chocolates[i] = 2 + (rand() % 9);
+    }
+
+     for (int i = numero - 1; i >= 0; i--) {
+        cout << "Esse chocolate custa " << chocolates[i] << endl;
+    }
+    
+    return 0;
+}
