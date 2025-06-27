@@ -5,6 +5,9 @@
 Palavra::Palavra(std::string p) : palavra(p) {
     this->palavra = p;
 }
+Palavra::Palavra() {
+    this->palavra = "";
+}
 
 void Palavra::Exibir(bool& comp, int& num, char palpites[]){
 	for(int i = 0; i < palavra.length(); i++){
@@ -25,4 +28,8 @@ void Palavra::Exibir(bool& comp, int& num, char palpites[]){
 
 std::string Palavra::getPalavra(){
     return this->palavra;
+}
+
+void Palavra::setPalavra(std::string p) {
+    this->palavra = p;
 }
