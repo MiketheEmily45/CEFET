@@ -9,6 +9,6 @@ class Divisores
         void PercorrerFila(Divisores*);
         Divisores* RemoverPilha(Divisores*);
         Divisores* RemoverFila(Divisores*);
-        void RemoverPilhaCompleto(Divisores*);
-        void RemoverFilaCompleto(Divisores*);
+        Divisores* RemoverPilhaCompleto(Divisores*);
+        Divisores* RemoverFilaCompleto(Divisores*);
 };

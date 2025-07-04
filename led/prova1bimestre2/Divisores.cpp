@@ -5,6 +5,7 @@ Divisores* Divisores::InserirPilha(Divisores *T, int Nume) {
     Divisores *aux = new Divisores();
     aux->Num = Nume;
     aux->elo = T;
+    T = aux;
     return T;
 }
 
@@ -24,7 +25,7 @@ void Divisores::PercorrerPilha(Divisores *T) {
         std::cout << "\nPilha vazia" << std::endl;
     } else {
         while (aux != NULL) {
-            std::cout << Num << " ";
+            std::cout << aux->Num << " ";
             aux = aux->elo;
         }
     std::cout << std::endl;
@@ -51,13 +52,21 @@ Divisores* Divisores::RemoverFila(Divisores *I) {
     delete(aux);
     return I;
 }
-void Divisores::RemoverPilhaCompleto(Divisores *T) {
-    while(T != NULL) {
-        Divisores::RemoverPilha(T);
+Divisores* Divisores::RemoverPilhaCompleto(Divisores *T) {
+    Divisores *aux = T;
+    while(aux != NULL) {
+        T = T->elo;
+        delete(aux);
+        aux = T;
     }
+    return T;
 }
-void Divisores::RemoverFilaCompleto(Divisores *I) {
+Divisores* Divisores::RemoverFilaCompleto(Divisores *I) {
+    Divisores *aux = I;
     while(I != NULL) {
-        Divisores::RemoverPilha(I);
+        I = I->elo;
+        delete(aux);
+        aux = I;
     }
+    return I;
 }
