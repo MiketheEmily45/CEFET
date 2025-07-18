@@ -21,9 +21,9 @@ int main()
         num2 = 1;
         for(int i = 2; i < num; i++){
             if (i == 2) {
+                Pilha = T.InserirPilha(Pilha, 0);
                 Pilha = T.InserirPilha(Pilha, 1);
-                Pilha = T.InserirPilha(Pilha, 1);
-                Fila = I.InserirFila(Fila, 1);
+                Fila = I.InserirFila(Fila, 0);
                 FilaI = Fila;
                 Fila = I.InserirFila(Fila, 1);
             }

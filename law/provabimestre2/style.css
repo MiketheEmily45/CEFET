@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+p {
+    font-size: 1em;
+}
+
+#area-principal {
+    color: #333;
+}
+
+#topo-pagina {
+    background-color: #4CAF50;
+    text-align: center;
+    color:#fff;
+    padding: 20px;
+}
+
+img[src = "fin.png"] {
+    max-width: 80px;
+}
+
+.menu-navegacao {
+    display: flex;
+    width: 20%;
+    text-align: center;
+    margin: auto;
+}
+
+.item-menu {
+    display: block;
+    block-size: 10%;
+    flex: 1;
+    padding: 10px;
+    margin-left: 15px;
+    margin-right: 15px;
+    color: #fff;
+}
+a:link {
+    color: #fff;
+    text-decoration: none;
+}
+a:visited {
+    color: #fff;
+}
+.titulo-site {
+    font-size: 2em;
+    margin-bottom: 15px;
+}
+
+#area-principal {
+    width: 960px;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#secao-destaque {
+    background-color: #2196F3;
+    color:#fff;
+    padding: 20px;
+    text-align: center;
+}   
+
+.botao-acao {
+    background-color: #FF9800;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor:pointer;
+}
+#secao-valores {
+    margin-bottom: 30px;
+}
+
+.titulo-secao-geral {
+    font-size: 1.6em;
+    text-align: center;
+}
+
+.lista-cards-acoes {
+    margin: auto;
+}
+.card-acao {
+    max-width: 300px;
+    text-align: center;
+    padding: 15px;
+    background-color: #E0E0E0;
+    border: #BDBDBD;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.variacao-acao {
+    color: #F44336;
+}
+
+#rodapes {
+    text-align: center;
+    background-color: #616161;
+    color: #fff;
+    padding: 15px;
+}
