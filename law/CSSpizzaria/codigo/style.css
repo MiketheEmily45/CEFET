@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: bisque;
+}
+
+.cabecalho {
+    background-color: rgb(192, 20, 20);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    margin: 0;
+    position: sticky;
+    top: 0;
+    margin-bottom: 20px;
+    z-index: 100;
+}
+
+.titulo-principal {
+    text-align: center;
+    margin: 20px 0;
+    color: rgb(192, 20, 20);
+}
+
+.container-pizzas {
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card-pizza {
+    position: relative;
+    display: block;
+    width: 280px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+
+.card-pizza:hover {
+    transform: translateY(-5px);
+}
+
+.badge-novo {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.imagem-pizza {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #fce627 0%, #f7a437 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 100px;
+    font-weight: bold;
+}
+
+.conteudo-card {
+    padding: 15px;
+}
+
+.nome-pizza {
+    display: block;
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.conteudo-card {
+    padding: 15px;
+}
+
+.preco-antigo {
+    display: inline;
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 10px;
+}
+
+
+.preco-atual {
+    display: inline;
+    color: #e74c3c;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.botoes {
+    margin-top: 15px;
+    text-align: center;
+}
+
+
+.botao-pedir {
+
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: #27ae60;
+    color: white;
+}
+
+
+.botao-pedir:hover {
+    background: #229954;
+}
+
+.mensagem-pedido {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: #2ecc71;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: none;
+    z-index: 1000;
+}
+
+
+.mensagem-pedido.mostrar {
+    display: block;
+}
+
+.conteudo-extra {
+    max-width: 99%;
+    margin: 40px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    line-height: 1.6;
+    text-align: center;
+}
+.conteudo-extra h2 {
+    color: rgb(192, 20, 20);
+    margin-bottom: 10px;
+}
+.conteudo-extra code {
+    background: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+}
