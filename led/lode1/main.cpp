@@ -77,7 +77,7 @@ int main()
                     cout << "Ninguem cadastrado!\n";
                 }else{
                     cout << "Listagem de Gatos\n";
-                    O.Listar_gatos(L[0]);
+                    O.Listar_gatos(L[1]);
                 }
                 break;
             case 6:

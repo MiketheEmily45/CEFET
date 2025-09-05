@@ -5,6 +5,8 @@ lista** lista::Inserir(lista **R, std::string U, int I, int T, std::string Raca)
     lista *novo = new lista();
     novo->nome_do_pet = U;
     novo->idade = I;
+    novo->tipo = T;
+    novo->raca = Raca;
     if(R[0] == NULL){
         R[0] = novo;
         R[1] = novo;
@@ -78,7 +80,7 @@ void lista::Listar(lista *I){
 void lista::Listar_cachorros(lista *I){
     lista *aux = I;
     while(aux != NULL && aux->tipo == 1){
-        std::cout << aux->nome_do_pet << " - " << aux->raca << " - " << aux->idade << " - ";
+        std::cout << aux->nome_do_pet << " - " << aux->raca << " - " << aux->idade;
         aux = aux->proximo;
     }
 };
@@ -86,7 +88,7 @@ void lista::Listar_cachorros(lista *I){
 void lista::Listar_gatos(lista *I){
     lista *aux = I;
     while(aux != NULL && aux->tipo == 2){
-        std::cout << aux->nome_do_pet << " - " << aux->raca << " - " << aux->idade << " - ";
+        std::cout << aux->nome_do_pet << " - " << aux->raca << " - " << aux->idade;
         aux = aux->anterior;
     }
 };
