@@ -1,80 +1,121 @@
-print("1 Saudação Personalizada\n")
+print("Lista de Exercícios de Python");
 
-nome = input("Digite seu nome: ")
-print("Olá,", nome, "! Seja bem vindo(a).")
+print("\n\n1. Saudação Personalizada:\n"); #Peça o nome do usuário e mostre a mensagem: Olá, [nome]! Bem-vindo(a)!.
 
-print("\n2 Cadastro simples\n")
+print("Digite seu nome:");
+nome = input("Nome: ");
+print("\nOlá," + nome + "! Bem-Vindo(a)!");
 
-nome = input("Digite seu nome: ")
-idade = int(input("Digite sua idade: "))
-cidade = input("Digite sua cidade: ")
-print("Olá,", nome, "! Você tem", idade, "anos e mora em", cidade + ".")    
+print("\n\n2. Cadastro Simples: "); #Solicite o nome, a idade e a cidade do usuário. Ao final, exiba a frase: Seu nome é [nome], você tem [idade] anos e mora em [cidade].
 
-print("\n3 Etiqueta de endereço\n")
+print("Digite seu nome completo:");
+nome = input("Nome completo: ");
+idade=input("Digite sua idade: ");
+cidade=input("Digite sua cidade: ");
+print("\nSeu nome é " + nome + ",você tem " + idade + " anos e mora em " + cidade);
 
-nome = input("Digite seu nome completo: ")
-endereço = input("Digite seu endereço: ")
-telefone = int(input("Digite seu telefone: "))
-print("Ola,\n", nome, "\n", endereço, "\n", telefone)
+print("\n\n3. Etiqueta de Endereço:\n"); # Escreva um programa que imprima seu nome completo, endereço e telefone, cada informação em uma linha separada.\n");
 
-print("\n4 União de palavras\n")
+endereco = input("Digite seu endereco: ");
+tel= input("Digite seu telefone: ");
 
-nome1 = input("Digite uma palavra:")
-nome2 = input("Digite outra palavra:")
-print(nome1.upper() + nome2.upper())
+print("\nNome: " + nome );
+print("Endereco: " + endereco);
+print("Telefone: " + tel);
 
-print("\n5 Conversão de medidas\n")
+print("\n\n4. União de Palavras:\n"); # Peça ao usuário para digitar duas palavras. Junte-as em uma única frase e depois mostre a frase inteira em letras maiúsculas.\n");
 
-medida = int(input("Digite uma medida em metros: "))
-print("A medida em cm é : ", medida * 100, ", e em mm é: ", medida * 1000, ".")
+pal1= input("Digite a 1° palavra: ");
+pal2= input("Digite a 2° palavra: ");
 
-print("\n6 Cálculo simples\n")
+palavra = pal1.upper()+pal2.upper();
 
-numero = float(input("Digite um número"))
-print("O dobro do número é: ", numero * 2, "e o terço é: ", numero / 3, ".")
+print("\n" + palavra);
 
-print("\n7  Calculadora de Quatro Operações:\n")
+print("\n\n5. Conversor de Medidas:\n"); #Leia um valor em metros e o converta para centímetros e milímetros.\n");
 
-num1 = int(input("Digite o primeiro número: "))
-num2 = int(input("Digite o segundo número: "))
+tam= float(input("Digite um numero em metros: "));
+tam_cm = tam * 100;
+tam_mm = tam * 1000;
+print("\nTamanho convertido em cm: " + str(tam_cm) + "\nTamanho em mm: " + str(tam_mm));
 
-print("Soma:", num1 + num2)
-print("Subtração:", num1 - num2)
-print("Multiplicação:", num1 * num2)
-print("Divisão:", num1 / num2)
+print("\n\n6. Cálculos Simples:\n"); #Leia um número inteiro e mostre o dobro e a terça parte dele.\n");
 
-print("\n8 Cálculo de Média Escolar\n")
+num = int(input("Digite um numero inteiro: "));
+num_do = num * 2;
+num_ter = num / 3;
 
-num1 = float(input("Digite a primeira nota: "))
-num2 = float(input("Digite a segunda nota: "))
-num3 = float(input("Digite a terceira nota: "))
+print("\nO dobro do numero e " + str(num_do) + " e a terca parte do numero e "+str(num_ter));
 
-print("A média é:", (num1 + num2 + num3) / 3)
+print("\n\n7. Calculadora de Quatro Operações:\n"); #Peça dois números e mostre os resultados da soma, subtração, multiplicação e divisão entre eles.\n");
 
-print("\n9 Cálculo de Área:\n")
+a = float(input("Digite o 1° numero para as operações: "));
+b = float(input("Digite o 2° numero para as operações: "));
 
-num1 = float(input("Digite a largura: "))
-num2 = float(input("Digite o comprimento: "))
-print("A área do retângulo é:", num1 * num2)
+soma = a + b;
+sub = a - b;
+mult = a * b;
+div = a // b;
 
-print("\n10  Calculadora de Números Decimais\n")
+print("\nSoma: " + str(soma));
+print("Subtração: " + str(sub));
+print("Multiplicação: " + str(mult));
+print("Divisão: " + str(div));
 
-num1 = int(input("Digite o primeiro número: "))
-num2 = int(input("Digite o segundo número: "))
+print("\n\n8. Cálculo de Média Escolar:\n"); #Leia três notas de um aluno e calcule a sua média final\n");
 
-print("Soma:", num1 + num2)
-print("Subtração:", num1 - num2)
-print("Multiplicação:", num1 * num2)
-print("Divisão:", num1 / num2)
+n1 = float(input("Digite a 1° nota: "));
+n2 = float(input("Digite a 2° nota: "));
+n3 = float(input("Digite a 3° nota: "));
 
-print("\n11 salario minimo\n")
+media = (n1 + n2 + n3) / 3;
 
-salario = float(input("Digite o valor do salário mínimo: "))
-reajuste = float(input("Digite o percentual de reajuste: "))
-print("O novo salário é:", salario * (1 + reajuste / 100))
+print("\nA media do aluno e : " + str(media));
 
-print("\n12 IMC\n")
+print("\n\n9. Cálculo de Área:\n"); #Peça a base e a altura de um retângulo e calcule sua área.\n");
 
-peso = float(input("Digite seu peso em kg: "))
-altura = float(input("Digite sua altura em metros: "))
-print("Seu IMC é:", peso / (altura ** 2))
+al = float(input("Digite o valor da altura: "));
+ba = float(input("Digite o valor da base: "));
+
+area = al * ba;
+
+print("\nA area e : "+ str(area));
+
+print("\n\n10. Calculadora de Números Decimais:\n"); #Crie uma calculadora que aceite números com casas decimais (float) para as quatro operações básicas.\n");
+
+a = float(input("Digite o 1° numero para as operações: "));
+b = float(input("Digite o 2° numero para as operações: "));
+
+soma = a + b;
+sub = a - b;
+mult = a * b;
+div = a / b;
+
+print("\nSoma: " + str(soma));
+print("Subtração: " + str(sub));
+print("Multiplicação: " + str(mult));
+print("Divisão: " + str(div));
+
+print("\n\n11. Reajuste Salarial:\n"); #Leia o salário de um funcionário e a porcentagem de reajuste. Calcule e mostre o novo salário.\n");
+
+sa = float(input("Digite o salario: "));
+re = int(input("Digite a taxa de porcentagem (sendo um valor natural): "));
+
+por = float(re / 100);
+
+reajuste = sa * por;
+sal_novo = sa + reajuste;
+
+print("\nO valor do salrio reajustado e : " + str(sal_novo));
+
+print("\n\n12. Índice de Massa Corporal (IMC):\n"); #Peça o peso (kg) e a altura (m) de uma pessoa e calcule o seu IMC.(Fórmula: IMC = Peso/altura²\n");
+
+pe = float(input("Digite seu peso: "));
+al = float(input("Digite sua altura: "));
+
+IMC = pe / (al * al);
+
+print("\nSeu IMC e : " + str("{:.2f}".format(IMC)));
+
+print("\nDê enter para sair...");
+input();
