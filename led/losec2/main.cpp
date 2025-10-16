@@ -7,11 +7,23 @@ using namespace std;
 
 int main()
 {
-    int opcao, num;
+    srand(time(NULL));
+    int opcao, num, qtd;
     losec **R, L, *Resp;
     R = new losec*[2];
     R[0] = R[1] = NULL;
-    //Tem que fazer com que um número aleatório seja cadastrado de 0-100, e caso se repita, acrescentar no qtd;
+    num = rand() % 101;
+    if(num != 0){
+        if(R[0] != NULL)
+            Resp = L.Pesquisar(R, num);
+        if(Resp == NULL){
+            R = L.Inserir(R, num, 1);
+        }else{
+            qtd = Resp->qtd + 1;
+            R = L.Excluir(R, num);
+            R = L.Inserir(R, num, qtd);
+            }
+        }
     cout << "Bem-vindo!" << endl;
     do {
         cout << "Menu:\n1-Pesquisar\n2-Exibir Números\n3-Excluir Números\n4-Sair" << endl;
