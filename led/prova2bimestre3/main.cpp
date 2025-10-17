@@ -27,9 +27,7 @@ int main()
                     L.Listar(R);
                     break;
                 case 3:
-                    cout << "Insira o nome:" << endl;
-                    cin >> nome;
-                    R = L.Excluir(R, nome);
+                    L.Sortear(R);
                     break;
                 case 4:
                     cout << "Tchau!" << endl;
