@@ -72,19 +72,26 @@ void losec::Listar(losec **R) {
 }
 
 void losec::Sortear(losec **R) {
-    int contagem;
-    std::string nome;
-    losec L;
-    losec *aux = R[0];
-     while (R[0] != R[1]) {
-        contagem =  1 + (rand() % 100);
-        while (contagem != 0) {
-            aux = aux->elo;
-            contagem--;
-            nome = aux->nome;
-        }
-        aux = aux->elo;
-        R = L.Excluir(R, nome);
+    if (R == NULL || R[0] == NULL) {
+        std::cout << "Lista vazia." << std::endl;
+        return;
     }
-    std::cout << "O vencedor foi: " << aux->nome << "!!!" << std::endl;
+    if (R[0] == R[1]) {
+        std::cout << "O vencedor foi: " << R[0]->nome << "!!!" << std::endl;
+        return;
+    }
+    losec *aux = R[1];
+    while (R[0] != R[1]) {
+        int contagem = 1 + (rand() % 100);
+        for (int i = 0; i < contagem; ++i) {
+            aux = aux->elo;
+        }
+        losec *proximo = aux->elo;
+        std::string nome = aux->nome;
+        this->Excluir(R, nome);
+        aux = proximo;
+    }
+    if (R[0] != NULL) {
+        std::cout << "O vencedor foi: " << R[0]->nome << "!!!" << std::endl;
+    }
 }
