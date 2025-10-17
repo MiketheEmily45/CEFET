@@ -38,28 +38,27 @@ losec** losec::Inserir(losec **R, std::string nome, int idade) {
 }
 
 losec** losec::Excluir(losec **R, std::string nome) {
-    losec *ant = R[0];
+    if (R == NULL || R[0] == NULL) return R;
+    
+    losec *ant = R[1];
     losec *atual = R[0];
-    while(atual != R[1] && atual->nome != nome) {
+    bool found = false;
+    do {
+        if (atual->nome == nome) { found = true; break; }
         ant = atual;
         atual = atual->elo;
+    } while (atual != R[0]);
+    if (!found) return R;
+    if (atual == R[0] && atual == R[1]) {
+        delete atual;
+        R[0] = R[1] = NULL;
+        return R;
     }
-    if (atual->nome == nome) {
-        if(atual == R[0]) {
-            R[1]->elo = R[0]->elo;
-            delete R[0];
-            delete atual;
-            R[0] = R[1]->elo;
-        }else if(atual == R[1]) {
-            ant->elo = R[0];
-            delete R[1];
-            delete atual;
-            R[1] = ant;
-        }else {
-            ant->elo = atual->elo;
-            delete atual;
-        }
-    }
+    ant->elo = atual->elo;
+    if (atual == R[0]) R[0] = atual->elo;
+    if (atual == R[1]) R[1] = ant;
+
+    delete atual;
     return R;
 }
 
