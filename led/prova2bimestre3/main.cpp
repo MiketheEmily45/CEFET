@@ -13,7 +13,7 @@ int main()
     R[0] = R[1] = NULL;
     cout << "Bem-vindo!" << endl;
         do {
-            cout << "1-nserir dados\n2-Listar\n3-Realizar sorteio\n4-Finalizar Programa." << endl;
+            cout << "1-Inserir dados\n2-Listar\n3-Realizar sorteio\n4-Finalizar Programa." << endl;
             cin >> op;
             switch (op) {
                 case 1:
