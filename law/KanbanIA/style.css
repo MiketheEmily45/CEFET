@@ -1,0 +1,203 @@
+/* Estilos Gerais */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0d47a1; /* Azul escuro */
+    margin: 0;
+    padding: 20px;
+    color: #333; /* Mantém a cor padrão de texto para elementos internos */
+}
+
+h1 {
+    text-align: center;
+    font-size: 50px;
+    color: #ffffff; /* Branco */
+    margin-bottom: 30px;
+}
+
+/* Container do Kanban */
+.kanban-container {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Colunas do Kanban */
+.kanban-column {
+    flex: 1;
+    min-width: 300px;
+    background-color: #ebecf0;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 1px 0 rgba(9, 30, 66, 0.25);
+}
+
+.kanban-column h2 {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #ccc;
+    text-align: center;
+    color: #1e88e5; /* Cor azul unificada para todos os títulos de coluna */
+    border-color: #1e88e5; /* Cor azul unificada para a borda */
+}
+
+/* Cores de destaque para os títulos das colunas (REMOVIDAS para unificar a cor) */
+/*
+#todo-column h2 { color: #e53935; border-color: #e53935; }
+#in-progress-column h2 { color: #ffb300; border-color: #ffb300; }
+#done-column h2 { color: #43a047; border-color: #43a047; }
+*/
+
+/* Lista de Tarefas */
+.task-list {
+    min-height: 50px; /* Para permitir arrastar tarefas para listas vazias */
+    padding: 5px;
+    transition: background-color 0.2s;
+}
+
+/* Tarefas */
+.kanban-task {
+    display: flex; /* Adicionado para alinhar o texto e o botão de exclusão */
+    justify-content: space-between; /* Adicionado para separar o texto do botão */
+    align-items: center; /* Adicionado para centralizar verticalmente */
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: grab;
+    box-shadow: 0 1px 0 rgba(9, 30, 66, 0.1);
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+/* ... (código anterior) ... */
+
+.kanban-task:active {
+    cursor: grabbing;
+    transform: rotate(1deg);
+}
+
+.delete-task-btn { /* Novo estilo para o botão de exclusão */
+    background: none;
+    border: none;
+    color: #e53935; /* Vermelho para o X */
+    font-weight: bold;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 0 5px;
+    line-height: 1;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+}
+
+.delete-task-btn:hover {
+    opacity: 1;
+    color: #c62828;
+}
+
+.kanban-task:hover {
+    background-color: #f4f5f7;
+    box-shadow: 0 2px 4px rgba(9, 30, 66, 0.15);
+}
+
+.kanban-task:active {
+    cursor: grabbing;
+    transform: rotate(1deg);
+}
+
+/* Feedback visual para Drag and Drop */
+.dragging {
+    opacity: 0.5;
+    border: 2px dashed #007bff;
+    background-color: #f0f0f0;
+}
+
+.drag-over {
+    background-color: #c9cdd4; /* Cor de fundo para indicar que é um alvo de drop */
+    border-radius: 8px;
+}
+
+/* Botão Adicionar Tarefa */
+.add-task-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+.add-task-btn:hover {
+    background-color: #1565c0;
+}
+
+/* Estilos do Modal */
+.modal {
+    display: none; /* Escondido por padrão */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4); /* Fundo escuro */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% do topo e centralizado */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Pode ser ajustado */
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#new-task-input {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#save-task-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #43a047;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.2s;
+}
+
+#save-task-btn:hover {
+    background-color: #2e7d32;
+}

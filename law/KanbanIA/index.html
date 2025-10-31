@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Kanban Board</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Mini Kanban Board</h1>
+
+    <div class="kanban-container">
+        <!-- Coluna "A fazer" -->
+        <div class="kanban-column" id="todo-column">
+            <h2>A fazer</h2>
+            <div class="task-list" id="todo-tasks">
+            </div>
+            <button class="add-task-btn" data-column="todo-tasks">Adicionar Tarefa</button>
+        </div>
+
+        <!-- Coluna "Em progresso" -->
+        <div class="kanban-column" id="in-progress-column">
+            <h2>Em progresso</h2>
+            <div class="task-list" id="in-progress-tasks">
+                <!-- Tarefas serão adicionadas aqui -->
+            </div>
+        </div>
+
+        <!-- Coluna "Concluído" -->
+        <div class="kanban-column" id="done-column">
+            <h2>Concluído</h2>
+            <div class="task-list" id="done-tasks">
+                <!-- Tarefas serão adicionadas aqui -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para adicionar nova tarefa (será manipulado via JS) -->
+    <div id="add-task-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Nova Tarefa</h2>
+            <input type="text" id="new-task-input" placeholder="Descrição da tarefa">
+            <button id="save-task-btn">Salvar</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
