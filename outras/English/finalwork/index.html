@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shrek: The game</title>
+    <style>
+        /* fixed 500x500 canvas */
+        .game-wrap { max-width: 900px; margin: 0 auto; }
+        #gameCanvas { width: 1000px; height: 500px; display: block; background: #7ec850; border: 4px solid #2b5b2b; box-sizing: border-box; }
+        /* remove responsive resizing for the canvas */
+    </style>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Shrek: The Game</h1>
+        <nav>
+            <ul>
+                <li><a href="#gameplay">Gameplay</a></li>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#Controls">Controls</a></li>
+                <li><a href="#Special_attacks">Special Attacks</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="gameplay" width="900" height="506">
+            <canvas id="gameCanvas" width="900" height="506" tabindex="0"></canvas>
+        </section>
+        <section id="introduction">
+            <h2>Introduction</h2>
+            <p>Shrek: The Game is an action-adventure platform game based on the popular animated movie "Shrek". It was released in 2001 and allows players to experience the story of Shrek through 3 levels and 3 bosses.</p>
+        </section>
+        <section id="Controls">
+            <h2>Controls</h2>
+            <p>You can jump with the space key, and with the wasd keys you can move around the game, the Q key does a punch, you can also jump on enemies to kill them</p>
+        </section>
+        <section id="Special_attacks">
+            <h2>Donkey:</h2>
+            <p>E key - he hits the enemy with a powerfull kick, giving more damage to bosses and also piercing through armor, has a 15 second cooldown</p>
+            <h2>Puss in boots:</h2>
+            <p>R key - he throws a sword that damages an enemy has a 20 second cooldown</p>
+            <h2>Giant Gingy</h2>
+            <p>X key - Can be used once per level, gives extreme damage to bosses and clears the screen. has a 35 second cooldown on the start of the level.</p>
+        </section>
+    </main>
+    <footer>
+        <p>Game made for Educational purposes only, as a final project for English class at CEFET-MG</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
