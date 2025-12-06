@@ -1,7 +1,64 @@
-// ...existing code...
-(function(){
+(function () {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
+
+    // Carregar imagens dos personagens
+    const images = {
+        player: new Image(),
+        donkey: new Image(),
+        puss: new Image(),
+        gingy: new Image(),
+        enemy: new Image(),
+        boss1: new Image(),
+        boss2: new Image(),
+        boss3: new Image(),
+        background1: new Image(),
+        background2: new Image(),
+        background3: new Image()
+    };
+
+    images.player.src = 'images/shrek.png';
+    images.donkey.src = 'images/donkey.png';
+    images.puss.src = 'images/puss.png';
+    images.gingy.src = 'images/gingy.png';
+    images.enemy.src = 'images/enemy.png';
+    images.boss1.src = 'images/bosses/boss1.png';
+    images.boss2.src = 'images/bosses/boss2.png';
+    images.boss3.src = 'images/bosses/boss3.png';
+    images.background1.src = 'images/backgrounds/background1.png';
+    images.background2.src = 'images/backgrounds/background2.png';
+    images.background3.src = 'images/backgrounds/background3.png';
+    
+    // Certifique-se de que as imagens estão carregadas antes de desenhar
+     const allImagesLoaded = new Promise((resolve) => {
+        let loadedCount = 0;
+        const totalImages = Object.keys(images).length;
+        // safety fallback: resolve after 6s even if some images fail
+        const fallback = setTimeout(() => {
+            console.warn('Image load timeout — continuing without all images.');
+            resolve();
+        }, 6000);
+
+        for (const key in images) {
+            images[key].onload = () => {
+                console.log(`Imagem carregada com sucesso: ${key}, caminho: ${images[key].src}`);
+                loadedCount++;
+                if (loadedCount === totalImages) {
+                    clearTimeout(fallback);
+                    resolve();
+                }
+            };
+            images[key].onerror = () => {
+                console.error(`Erro ao carregar a imagem: ${key}, caminho: ${images[key].src}`);
+                // still count errors so loader won't hang
+                loadedCount++;
+                if (loadedCount === totalImages) {
+                    clearTimeout(fallback);
+                    resolve();
+                }
+            };
+        }
+    });
 
     // fixed CSS size in px (viewport)
     const CSS_WIDTH = 1000;
@@ -38,7 +95,8 @@
 
     const keys = {};
     window.addEventListener('keydown', e => { 
-        if (document.activeElement === canvas) e.preventDefault(); 
+        if (document.activeElement === canvas) e.preventDefault(); // Impede o comportamento padrão no canvas
+        if (e.key === ' ' || e.code === 'Space') e.preventDefault(); // Impede a rolagem da página
         keys[e.key.toLowerCase()] = true; 
     });
     window.addEventListener('keyup', e => { 
@@ -71,6 +129,7 @@
         if (e.x === undefined) e.x = 0;
         if (e.minX === undefined) e.minX = Math.max(0, e.x - 200);
         if (e.maxX === undefined) e.maxX = Math.min(levelWidth - (e.w || 48), e.x + 200);
+        console.log('Inimigo criado:', e); // Adicione este log
         return e;
     }
 
@@ -89,26 +148,23 @@
 
     // simple level definitions (3 worlds + bosses)
     const worlds = [
-        // world 0
         {
             width: 3000,
+            background: images.background1, // Cenário da fase 1
             platforms: [
                 { x: 0, y: groundY, w: 3000, h: CSS_HEIGHT - groundY },
-                { x: 800, y: 200, w: 160, h: 20},
-                { x: 1300, y: 270, w: 200, h: 130},
-                { x: 1600, y: 270, w: 500, h: 20}
+                { x: 800, y: 200, w: 160, h: 20 },
+                { x: 1300, y: 270, w: 200, h: 130 },
+                { x: 1600, y: 270, w: 500, h: 20 }
             ],
-            enemies: function(){ // returns array
+            enemies: function() {
                 return [
                     createEnemy({ x: 200, y: groundY - enemyDefaults.h, minX: 50, maxX: 400, hp: 1 }),
-                    createEnemy({ x: 820, y: groundY - enemyDefaults.h, minX: 720, maxX: 960, hp: 3 }),
-                    createEnemy({ x: 1200, y: groundY - enemyDefaults.h, minX: 1000, maxX: 1280, hp: 2 }),
-                    createEnemy({ x: 1300 + 30, y: 270 - enemyDefaults.h, minX: 1300, maxX: 1300 + 200 - enemyDefaults.w, hp: 3 }),
-                    createEnemy({ x: 1300 + 110, y: 270 - enemyDefaults.h, minX: 1300, maxX: 1300 + 200 - enemyDefaults.w, hp: 3 }),
-                    createEnemy({ x: 1600 + Math.floor(500/2) - Math.floor(enemyDefaults.w/2), y: 270 - enemyDefaults.h, minX: 1600, maxX: 1600 + 500 - enemyDefaults.w, hp: 4 })
+                    createEnemy({ x: 820, y: groundY - enemyDefaults.h, minX: 720, maxX: 960, hp: 3 })
                 ];
             },
             boss: {
+                image: images.boss1, // Visual do Boss da fase 1
                 hp: 30,
                 x: 2400,
                 y: groundY - 160,
@@ -119,68 +175,60 @@
                 move: 'stationary'
             }
         },
-
-        // world 1 (slightly different layout)
         {
             width: 3600,
+            background: images.background2, // Cenário da fase 2
             platforms: [
                 { x: 0, y: groundY, w: 3600, h: CSS_HEIGHT - groundY },
-                { x: 600, y: 240, w: 180, h: 20},
-                { x: 1400, y: 230, w: 220, h: 20},
-                { x: 2200, y: 300, w: 400, h: 20}
+                { x: 600, y: 240, w: 180, h: 20 },
+                { x: 1400, y: 230, w: 220, h: 20 },
+                { x: 2200, y: 300, w: 400, h: 20 }
             ],
-            enemies: function(){
+            enemies: function() {
                 return [
                     createEnemy({ x: 150, y: groundY - enemyDefaults.h, minX: 50, maxX: 350, hp: 2 }),
-                    createEnemy({ x: 640, y: groundY - enemyDefaults.h, minX: 560, maxX: 820, hp: 3 }),
-                    createEnemy({ x: 1350, y: groundY - enemyDefaults.h, minX: 1200, maxX: 1500, hp: 2 }),
-                    createEnemy({ x: 1400 + 40, y: 230 - enemyDefaults.h, minX: 1400, maxX: 1400 + 220 - enemyDefaults.w, hp: 3 }),
-                    createEnemy({ x: 1400 + 120, y: 230 - enemyDefaults.h, minX: 1400, maxX: 1400 + 220 - enemyDefaults.w, hp: 3 }),
-                    createEnemy({ x: 2200 + 100, y: 300 - enemyDefaults.h, minX: 2200, maxX: 2200 + 400 - enemyDefaults.w, hp: 5 })
+                    createEnemy({ x: 640, y: groundY - enemyDefaults.h, minX: 560, maxX: 820, hp: 3 })
                 ];
             },
             boss: {
+                image: images.boss2, // Visual do Boss da fase 2
                 hp: 45,
                 x: 3000,
                 y: groundY - 160,
                 w: 160,
                 h: 160,
-                shootInterval: 1.5, // faster DPS
+                shootInterval: 1.5,
                 projSpeed: 420,
                 move: 'stationary'
             }
         },
-
-        // world 2 (final world)
         {
             width: 5000,
+            background: images.background3, // Cenário da fase 3
             platforms: [
                 { x: 0, y: groundY, w: 5000, h: CSS_HEIGHT - groundY },
-                { x: 900, y: 220, w: 200, h: 20},
-                { x: 2000, y: 200, w: 300, h: 20},
-                { x: 3200, y: 260, w: 360, h: 20}
+                { x: 900, y: 220, w: 200, h: 20 },
+                { x: 2000, y: 200, w: 300, h: 20 },
+                { x: 3200, y: 260, w: 360, h: 20 }
             ],
-            enemies: function(){
+            enemies: function() {
                 return [
                     createEnemy({ x: 250, y: groundY - enemyDefaults.h, minX: 100, maxX: 420, hp: 2 }),
-                    createEnemy({ x: 920, y: groundY - enemyDefaults.h, minX: 820, maxX: 1100, hp: 3 }),
-                    createEnemy({ x: 1990, y: groundY - enemyDefaults.h, minX: 1800, maxX: 2200, hp: 2 }),
-                    createEnemy({ x: 2000 + 40, y: 200 - enemyDefaults.h, minX: 2000, maxX: 2000 + 300 - enemyDefaults.w, hp: 3 }),
-                    createEnemy({ x: 2000 + 160, y: 200 - enemyDefaults.h, minX: 2000, maxX: 2000 + 300 - enemyDefaults.w, hp: 3 }),
-                    createEnemy({ x: 3200 + 160, y: 260 - enemyDefaults.h, minX: 3200, maxX: 3200 + 360 - enemyDefaults.w, hp: 6 })
+                    createEnemy({ x: 920, y: groundY - enemyDefaults.h, minX: 820, maxX: 1100, hp: 3 })
                 ];
             },
             boss: {
+                image: images.boss3, // Visual do Boss da fase 3
                 hp: 70,
                 x: 4200,
                 y: groundY - 160,
                 w: 160,
                 h: 160,
-                shootInterval: 1.0, // faster DPS
+                shootInterval: 1.0,
                 projSpeed: 520,
-                move: 'vertical', // final boss moves up and down
+                move: 'vertical',
                 moveRange: { minY: groundY - 320, maxY: groundY - 100 },
-                moveSpeed: 120 // px/s up/down
+                moveSpeed: 120
             }
         }
     ];
@@ -245,45 +293,47 @@
     }
 
     function spawnGingy() {
-    specials.gingy.active = true;
-    specials.gingy.cooldown = specials.gingy.cooldownMax;
-    specials.gingy.usedThisLevel = true;
-    specials.gingy.x = Math.max(-200 + cameraX, cameraX - 220);
-    specials.gingy.y = clamp(player.y - 20, 0, CSS_HEIGHT - 120);
-    specials.gingy.vx = 700;
-    specials.gingy.activeTime = Infinity;
-    // eliminate any enemy currently on screen using damageEnemy (so boss death is handled properly)
-    for (const e of enemies) {
-        if (!e.alive) continue;
-        if (e.x + e.w >= cameraX && e.x <= cameraX + CSS_WIDTH) {
-            damageEnemy(e, 9999);
+        specials.gingy.active = true;
+        specials.gingy.cooldown = specials.gingy.cooldownMax;
+        specials.gingy.usedThisLevel = true;
+        specials.gingy.x = Math.max(-200 + cameraX, cameraX - 220);
+        specials.gingy.y = clamp(player.y - 20, 0, CSS_HEIGHT - 120);
+        specials.gingy.vx = 700;
+        specials.gingy.activeTime = 3.0; // set finite duration instead of Infinity
+        for (const e of enemies) {
+            if (!e.alive) continue;
+            if (e.x + e.w >= cameraX && e.x <= cameraX + CSS_WIDTH) {
+                damageEnemy(e, 9999);
+            }
         }
     }
-}
 
     // level loader
     function loadWorld(index) {
         const w = worlds[index];
         currentWorldIndex = index;
         levelWidth = w.width;
-        platforms = JSON.parse(JSON.stringify(w.platforms)); // simple copy
+        platforms = JSON.parse(JSON.stringify(w.platforms));
         endBlock = { x: levelWidth - 160, y: groundY - 160, w: 160, h: 160 };
         platforms.push(endBlock);
         enemies = w.enemies();
-        // reset player into start area
         player.x = 80;
         player.y = 0;
         player.vx = player.vy = 0;
         player.onGround = false;
         levelState = 'world';
         cameraX = 0;
-        specials.gingy.usedThisLevel = false;
+        // fully reset gingy state
+       specials.gingy.usedThisLevel = false;
+       specials.gingy.active = false;
+       specials.gingy.activeTime = 0;
+       specials.gingy.cooldown = 0;
+       specials.gingy.vx = 0;
     }
 
     function loadBossForCurrentWorld() {
         const bossCfg = worlds[currentWorldIndex].boss;
         levelState = 'boss';
-        // small boss arena width
         levelWidth = Math.max(1200, bossCfg.x + 300);
         platforms = [
             { x: 0, y: groundY, w: levelWidth, h: CSS_HEIGHT - groundY },
@@ -293,7 +343,6 @@
         endBlock = { x: levelWidth - 160, y: groundY - 160, w: 160, h: 160 };
         platforms.push(endBlock);
 
-        // create boss enemy
         const boss = {
             x: bossCfg.x,
             y: bossCfg.y,
@@ -315,17 +364,24 @@
         };
         enemies = [ boss ];
 
-        // place player
         player.x = 80;
         player.y = groundY - player.h;
         player.vx = player.vy = 0;
         player.onGround = true;
         cameraX = 0;
-        specials.gingy.usedThisLevel = false;
+        
+        // fully reset gingy so it can be used fresh in boss fight
+       specials.gingy.usedThisLevel = false;
+       specials.gingy.active = false;
+       specials.gingy.activeTime = 0;
+       specials.gingy.cooldown = 0;
+       specials.gingy.vx = 0;
     }
 
     function onBossDefeated() {
-        // if more worlds remain, load next world; else mark game complete
+        specials.gingy.usedThisLevel = false;
+        specials.gingy.active = false;
+        specials.gingy.cooldown = 0;
         if (currentWorldIndex < worlds.length - 1) {
             loadWorld(currentWorldIndex + 1);
         } else {
@@ -399,8 +455,12 @@
                 doPunchAttack();
             }
 
-            if (keys['e'] && specials.donkey.cooldown <= 0) spawnDonkey();
-            if (keys['r'] && specials.puss.cooldown <= 0) spawnPuss();
+            if (keys['e'] && specials.donkey.cooldown <= 0) {
+                spawnDonkey();
+            }
+            if (keys['r'] && specials.puss.cooldown <= 0) {
+                spawnPuss();
+            }
             if (keys['x'] && specials.gingy.cooldown <= 0 && !specials.gingy.usedThisLevel) spawnGingy();
         } else {
             player.vx = 0;
@@ -543,14 +603,32 @@
             }
         }
 
+        // enemy movement
+        for (const enemy of enemies) {
+            if (!enemy.alive) continue;
+
+            // Movimento dos inimigos
+            enemy.x += (enemy.vx || 0) * dt;
+            if (enemy.x < enemy.minX) {
+                enemy.x = enemy.minX;
+                enemy.vx *= -1;
+            }
+            if (enemy.x > enemy.maxX) {
+                enemy.x = enemy.maxX;
+                enemy.vx *= -1;
+            }
+        }
+
         // check finish block touch (only in world state)
         if (levelState === 'world' && isTouchingEndBlock()) {
-            // enter boss for this world
+            // Transição para a fase de Boss
             loadBossForCurrentWorld();
         }
 
         // update camera
-        cameraX = clamp(player.x + player.w/2 - CSS_WIDTH / 2, 0, Math.max(0, levelWidth - CSS_WIDTH));
+        cameraX = clamp(player.x + player.w / 2 - CSS_WIDTH / 2, 0, Math.max(0, levelWidth - CSS_WIDTH));
+        console.log('Posição da câmera:', cameraX);
+        console.log('Posições dos inimigos:', enemies.map(e => ({ x: e.x, y: e.y })));
 
        // apply pending world transition (deferred to avoid reentrancy during enemy loop)
        if (pendingWorldIndex !== null) {
@@ -566,131 +644,146 @@
     function specialFillTime(v) { return Math.ceil(v); }
 
     function draw() {
-        ctx.clearRect(0,0,CSS_WIDTH, CSS_HEIGHT);
-        ctx.save();
-        ctx.translate(-cameraX, 0);
+    ctx.clearRect(0, 0, CSS_WIDTH, CSS_HEIGHT);
+    ctx.save();
+    ctx.translate(-cameraX, 0);
 
-        // background
-        ctx.fillStyle = '#8fd3a6';
-        ctx.fillRect(cameraX,0, CSS_WIDTH, CSS_HEIGHT);
+    // background: just use a solid color (no image drawing)
+    ctx.fillStyle = '#8fd3a6';
+    ctx.fillRect(cameraX, 0, CSS_WIDTH, CSS_HEIGHT);
 
-        // draw platforms
-        for (const plat of platforms) {
-            ctx.fillStyle = (endBlock && plat === endBlock) ? '#ffd700' : '#6b8a3e';
-            ctx.fillRect(plat.x, plat.y, plat.w, plat.h);
-        }
-
-        // draw end label
-        if (levelState === 'world' && endBlock) {
-            ctx.fillStyle = '#000';
-            ctx.font = '16px sans-serif';
-            ctx.fillText('FINISH', endBlock.x + 18, endBlock.y + 90);
-        }
-
-        // draw specials
-        if (specials.donkey.active) {
-            ctx.fillStyle = '#8b5a2b';
-            ctx.fillRect(specials.donkey.x, specials.donkey.y, 64, 56);
-            ctx.fillStyle = '#fff'; ctx.font = '12px sans-serif';
-            ctx.fillText('Donkey', specials.donkey.x + 6, specials.donkey.y + 34);
-        }
-        if (specials.puss.active) {
-            ctx.fillStyle = '#c08c4a';
-            ctx.fillRect(specials.puss.x, specials.puss.y, 48, 48);
-            ctx.fillStyle = '#000'; ctx.font = '12px sans-serif';
-            ctx.fillText('Puss', specials.puss.x + 6, specials.puss.y + 30);
-        }
-        if (specials.gingy.active) {
-            ctx.fillStyle = '#f4a261';
-            ctx.fillRect(specials.gingy.x, specials.gingy.y, 120, 120);
-            ctx.fillStyle = '#000'; ctx.font = '16px sans-serif';
-            ctx.fillText('Giant', specials.gingy.x + 10, specials.gingy.y + 50);
-            ctx.fillText('Gingy', specials.gingy.x + 10, specials.gingy.y + 74);
-            ctx.fillStyle = 'rgba(255,255,255,0.12)';
-            ctx.fillRect(cameraX,0, CSS_WIDTH, CSS_HEIGHT);
-        }
-
-        // draw enemies (including boss)
-        for (const e of enemies) {
-            if (!e.alive) continue;
-            ctx.fillStyle = e.isBoss ? '#800000' : '#b22222';
-            ctx.fillRect(e.x, e.y, e.w, e.h);
-            ctx.fillStyle = '#fff'; ctx.font = '12px sans-serif';
-            ctx.fillText(e.isBoss ? 'BOSS' : 'Enemy', e.x - 2, e.y - 6);
-            ctx.fillStyle = '#000'; ctx.font = '10px sans-serif';
-            ctx.fillText(`HP:${e.hp}`, e.x, e.y - 18);
-        }
-
-        // draw projectiles
-        for (const p of projectiles) {
-            ctx.fillStyle = (p.owner === 'boss') ? '#000' : '#d1d1d1';
-            ctx.fillRect(p.x - 6, p.y - 3, 12, 6);
-        }
-
-        // draw player
-        ctx.save();
-        ctx.translate(player.x + player.w/2, player.y + player.h/2);
-        ctx.fillStyle = '#3b7a2b';
-        ctx.fillRect(-player.w/2, -player.h/2, player.w, player.h);
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(player.facing*6 - 6, -player.h/4, 8, 8);
-        if (player.punching > 0) {
-            ctx.fillStyle = 'rgba(255,200,0,0.9)';
-            ctx.fillRect(player.facing*player.w/2, -12, player.facing*24, 12);
-        }
-        ctx.restore();
-
-        ctx.restore();
-
-        // HUD
-        ctx.fillStyle = '#000'; ctx.font = '14px sans-serif';
-        ctx.fillText('WASD: move  |  Space: jump  |  Q: punch', 10, 20);
-
-        if (levelState === 'boss') {
-            ctx.fillStyle = '#900'; ctx.font = '18px sans-serif';
-            ctx.fillText('BOSS FIGHT', CSS_WIDTH/2 - 60, 28);
-        }
-
-        // specials HUD
-        ctx.font = '12px sans-serif';
-        ctx.fillStyle = specials.donkey.cooldown > 0 ? '#a00' : '#060';
-        ctx.fillText(`E - Donkey: ${specials.donkey.active ? 'ACTIVE' : (specials.donkey.cooldown>0? specialFillTime(specials.donkey.cooldown) + 's' : 'ready')}`, 10, 40);
-        ctx.fillStyle = specials.puss.cooldown > 0 ? '#a00' : '#060';
-        ctx.fillText(`R - Puss: ${specials.puss.active ? 'ACTIVE' : (specials.puss.cooldown>0? specialFillTime(specials.puss.cooldown) + 's' : 'ready')}`, 10, 56);
-        ctx.fillStyle = (specials.gingy.cooldown > 0 || specials.gingy.usedThisLevel) ? '#a00' : '#060';
-        const gingyText = specials.gingy.active ? 'ACTIVE' : (specials.gingy.usedThisLevel ? 'used' : (specials.gingy.cooldown>0? specialFillTime(specials.gingy.cooldown) + 's' : 'ready'));
-        ctx.fillText(`X - Giant Gingy: ${gingyText}`, 10, 72);
-
-        // progress bar
-        const barX = 10, barY = CSS_HEIGHT - 18, barW = 240, barH = 8;
-        ctx.fillStyle = '#ddd';
-        ctx.fillRect(barX, barY, barW, barH);
-        const progress = clamp((player.x + player.w/2) / levelWidth, 0, 1);
-        ctx.fillStyle = '#3b7a2b';
-        ctx.fillRect(barX, barY, barW * progress, barH);
-        ctx.strokeStyle = '#000';
-        ctx.strokeRect(barX, barY, barW, barH);
-
-        // final game complete
-        if (levelComplete) {
-            ctx.fillStyle = 'rgba(0,0,0,0.6)';
-            ctx.fillRect(CSS_WIDTH/2 - 160, CSS_HEIGHT/2 - 40, 320, 80);
-            ctx.fillStyle = '#fff';
-            ctx.font = '20px sans-serif';
-            ctx.fillText('You beat the game!', CSS_WIDTH/2 - 120, CSS_HEIGHT/2);
-            ctx.font = '12px sans-serif';
-            ctx.fillText('Press F5 to restart', CSS_WIDTH/2 - 50, CSS_HEIGHT/2 + 24);
-        }
+    // draw platforms
+    for (const plat of platforms) {
+        ctx.fillStyle = (endBlock && plat === endBlock) ? '#ffd700' : '#6b8a3e';
+        ctx.fillRect(plat.x, plat.y, plat.w, plat.h);
     }
 
+    // draw end label
+    if (levelState === 'world' && endBlock) {
+        ctx.fillStyle = '#000';
+        ctx.font = '16px sans-serif';
+        ctx.fillText('FINISH', endBlock.x + 18, endBlock.y + 90);
+    }
+
+    // draw specials (donkey, puss, gingy) — use colored rects, no images
+    if (specials.donkey.active) {
+        ctx.fillStyle = '#8b5a2b';
+        ctx.fillRect(specials.donkey.x, specials.donkey.y, 64, 56);
+        ctx.fillStyle = '#fff';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('Donkey', specials.donkey.x + 6, specials.donkey.y + 34);
+    }
+    if (specials.puss.active) {
+        ctx.fillStyle = '#c08c4a';
+        ctx.fillRect(specials.puss.x, specials.puss.y, 48, 48);
+        ctx.fillStyle = '#000';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('Puss', specials.puss.x + 6, specials.puss.y + 30);
+    }
+    if (specials.gingy.active) {
+        ctx.fillStyle = '#f4a261';
+        ctx.fillRect(specials.gingy.x, specials.gingy.y, 120, 120);
+        ctx.fillStyle = '#000';
+        ctx.font = '16px sans-serif';
+        ctx.fillText('Giant', specials.gingy.x + 10, specials.gingy.y + 50);
+        ctx.fillText('Gingy', specials.gingy.x + 10, specials.gingy.y + 74);
+        ctx.fillStyle = 'rgba(255,255,255,0.12)';
+        ctx.fillRect(cameraX, 0, CSS_WIDTH, CSS_HEIGHT);
+    }
+
+    // draw enemies (no images, just colored rects)
+    for (const e of enemies) {
+        if (!e.alive) continue;
+        ctx.fillStyle = e.isBoss ? '#800000' : '#b22222';
+        ctx.fillRect(e.x, e.y, e.w, e.h);
+        ctx.fillStyle = '#fff';
+        ctx.font = '12px sans-serif';
+        ctx.fillText(e.isBoss ? 'BOSS' : 'Enemy', e.x - 2, e.y - 6);
+        ctx.fillStyle = '#000';
+        ctx.font = '10px sans-serif';
+        ctx.fillText(`HP:${e.hp}`, e.x, e.y - 18);
+    }
+
+    // draw projectiles
+    for (const p of projectiles) {
+        ctx.fillStyle = (p.owner === 'boss') ? '#000' : '#d1d1d1';
+        ctx.fillRect(p.x - 6, p.y - 3, 12, 6);
+    }
+
+    // draw player
+    ctx.save();
+    ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
+    ctx.fillStyle = '#3b7a2b';
+    ctx.fillRect(-player.w / 2, -player.h / 2, player.w, player.h);
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(player.facing * 6 - 6, -player.h / 4, 8, 8);
+    if (player.punching > 0) {
+        ctx.fillStyle = 'rgba(255,200,0,0.9)';
+        ctx.fillRect(player.facing * player.w / 2, -12, player.facing * 24, 12);
+    }
+    ctx.restore();
+
+    ctx.restore();
+
+    // HUD (screen-space, no ctx.translate needed)
+    ctx.fillStyle = '#000';
+    ctx.font = '14px sans-serif';
+    ctx.fillText('WASD: move  |  Space: jump  |  Q: punch', 10, 20);
+
+    if (levelState === 'boss') {
+        ctx.fillStyle = '#900';
+        ctx.font = '18px sans-serif';
+        ctx.fillText('BOSS FIGHT', CSS_WIDTH / 2 - 60, 28);
+    }
+
+    // specials HUD
+    ctx.font = '12px sans-serif';
+    ctx.fillStyle = specials.donkey.cooldown > 0 ? '#a00' : '#060';
+    ctx.fillText(`E - Donkey: ${specials.donkey.active ? 'ACTIVE' : (specials.donkey.cooldown > 0 ? Math.ceil(specials.donkey.cooldown) + 's' : 'ready')}`, 10, 40);
+    ctx.fillStyle = specials.puss.cooldown > 0 ? '#a00' : '#060';
+    ctx.fillText(`R - Puss: ${specials.puss.active ? 'ACTIVE' : (specials.puss.cooldown > 0 ? Math.ceil(specials.puss.cooldown) + 's' : 'ready')}`, 10, 56);
+    ctx.fillStyle = (specials.gingy.cooldown > 0 || specials.gingy.usedThisLevel) ? '#a00' : '#060';
+    const gingyText = specials.gingy.active ? 'ACTIVE' : (specials.gingy.usedThisLevel ? 'used' : (specials.gingy.cooldown > 0 ? Math.ceil(specials.gingy.cooldown) + 's' : 'ready'));
+    ctx.fillText(`X - Giant Gingy: ${gingyText}`, 10, 72);
+
+    // progress bar
+    const barX = 10, barY = CSS_HEIGHT - 18, barW = 240, barH = 8;
+    ctx.fillStyle = '#ddd';
+    ctx.fillRect(barX, barY, barW, barH);
+    const progress = Math.max(0, Math.min((player.x + player.w / 2) / levelWidth, 1));
+    ctx.fillStyle = '#3b7a2b';
+    ctx.fillRect(barX, barY, barW * progress, barH);
+    ctx.strokeStyle = '#000';
+    ctx.strokeRect(barX, barY, barW, barH);
+
+    // final game complete
+    if (levelComplete) {
+        ctx.fillStyle = 'rgba(0,0,0,0.6)';
+        ctx.fillRect(CSS_WIDTH / 2 - 160, CSS_HEIGHT / 2 - 40, 320, 80);
+        ctx.fillStyle = '#fff';
+        ctx.font = '20px sans-serif';
+        ctx.fillText('You beat the game!', CSS_WIDTH / 2 - 120, CSS_HEIGHT / 2);
+        ctx.font = '12px sans-serif';
+        ctx.fillText('Press F5 to restart', CSS_WIDTH / 2 - 50, CSS_HEIGHT / 2 + 24);
+    }
+}
+
     function loop(ts) {
+        console.log('Loop executando...');
         const dt = Math.min(0.033, (ts - last) / 1000);
         last = ts;
         update(dt);
         draw();
         requestAnimationFrame(loop);
     }
-    requestAnimationFrame(loop);
+
+    // Aguarde o carregamento das imagens antes de iniciar o jogo
+    allImagesLoaded.then(() => {
+        console.log('Todas as imagens foram carregadas. Iniciando o jogo...');
+        requestAnimationFrame(loop);
+    }).catch((err) => {
+        console.error('Erro ao carregar as imagens:', err);
+    });
 
     // allow canvas to receive keyboard events when clicked
     canvas.addEventListener('click', () => canvas.focus());

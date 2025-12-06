@@ -1,0 +1,95 @@
+/* GERAL — visual retro e extremamente pixelado */
+body {
+    margin: 0;
+    background: #041a2f; /* azul bem escuro */
+    font-family: "Courier New", monospace;
+    color: #9ff7ff; /* ciano claro */
+    image-rendering: pixelated;
+}
+
+/* HEADER — azul neon com detalhes ciano */
+header {
+    background: #073a5c;
+    padding: 20px;
+    text-align: center;
+    border-bottom: 4px solid #0aa5c4;
+    box-shadow: 0 0 10px #0aa5c4;
+    image-rendering: pixelated;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 34px;
+    color: #8eeaff;
+    text-shadow: 2px 2px 0 #013040;
+}
+
+/* MENU */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 18px;
+}
+
+nav ul li a {
+    color: #8eeaff;
+    text-decoration: none;
+    font-size: 20px;
+    text-shadow: 2px 2px 0 #013040;
+    image-rendering: pixelated;
+}
+
+nav ul li a:hover {
+    color: white;
+    text-shadow: 0 0 8px #00eaff;
+}
+
+/* CANVAS — bordas neon + pixels extremamente fortes */
+#gameCanvas {
+    display: block;
+    margin: 25px auto;
+    border: 6px solid #0aa5c4;
+    box-shadow: 0 0 20px #00eaff;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+    background: #000814;
+}
+
+/* SEÇÕES */
+section {
+    padding: 20px;
+    margin: 30px auto;
+    width: 80%;
+    background: #052238;
+    border: 3px solid #0aa5c4;
+    box-shadow: 0 0 10px #0aa5c4;
+    image-rendering: pixelated;
+}
+
+section h2 {
+    font-size: 28px;
+    color: #9ff7ff;
+    text-shadow: 2px 2px 0 #013040;
+}
+
+section p {
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+/* FOOTER */
+footer {
+    text-align: center;
+    padding: 20px;
+    background: #073a5c;
+    border-top: 4px solid #0aa5c4;
+    color: #9ff7ff;
+    box-shadow: 0 0 10px #0aa5c4;
+    margin-top: 50px;
+}
+ 
