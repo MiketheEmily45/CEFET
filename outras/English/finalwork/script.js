@@ -5,29 +5,19 @@
     // Carregar imagens dos personagens
     const images = {
         player: new Image(),
+        player_punch: new Image(),
         donkey: new Image(),
         puss: new Image(),
         gingy: new Image(),
         enemy: new Image(),
-        boss1: new Image(),
-        boss2: new Image(),
-        boss3: new Image(),
-        background1: new Image(),
-        background2: new Image(),
-        background3: new Image()
     };
 
+    images.player_punch.src = 'images/shrek_punch.png';
     images.player.src = 'images/shrek.png';
     images.donkey.src = 'images/donkey.png';
     images.puss.src = 'images/puss.png';
     images.gingy.src = 'images/gingy.png';
     images.enemy.src = 'images/enemy.png';
-    images.boss1.src = 'images/bosses/boss1.png';
-    images.boss2.src = 'images/bosses/boss2.png';
-    images.boss3.src = 'images/bosses/boss3.png';
-    images.background1.src = 'images/backgrounds/background1.png';
-    images.background2.src = 'images/backgrounds/background2.png';
-    images.background3.src = 'images/backgrounds/background3.png';
     
     // Certifique-se de que as imagens estão carregadas antes de desenhar
      const allImagesLoaded = new Promise((resolve) => {
@@ -665,43 +655,42 @@
         ctx.fillText('FINISH', endBlock.x + 18, endBlock.y + 90);
     }
 
-    // draw specials (donkey, puss, gingy) — use colored rects, no images
-    if (specials.donkey.active) {
-        ctx.fillStyle = '#8b5a2b';
-        ctx.fillRect(specials.donkey.x, specials.donkey.y, 64, 56);
-        ctx.fillStyle = '#fff';
-        ctx.font = '12px sans-serif';
-        ctx.fillText('Donkey', specials.donkey.x + 6, specials.donkey.y + 34);
+    // draw specials with images
+    if (specials.donkey.active && images.donkey.complete && images.donkey.naturalWidth > 0) {
+        ctx.drawImage(images.donkey, specials.donkey.x, specials.donkey.y, 64, 56);
     }
-    if (specials.puss.active) {
-        ctx.fillStyle = '#c08c4a';
-        ctx.fillRect(specials.puss.x, specials.puss.y, 48, 48);
-        ctx.fillStyle = '#000';
-        ctx.font = '12px sans-serif';
-        ctx.fillText('Puss', specials.puss.x + 6, specials.puss.y + 30);
+    if (specials.puss.active && images.puss.complete && images.puss.naturalWidth > 0) {
+        ctx.drawImage(images.puss, specials.puss.x, specials.puss.y, 48, 48);
     }
-    if (specials.gingy.active) {
-        ctx.fillStyle = '#f4a261';
-        ctx.fillRect(specials.gingy.x, specials.gingy.y, 120, 120);
-        ctx.fillStyle = '#000';
-        ctx.font = '16px sans-serif';
-        ctx.fillText('Giant', specials.gingy.x + 10, specials.gingy.y + 50);
-        ctx.fillText('Gingy', specials.gingy.x + 10, specials.gingy.y + 74);
+    if (specials.gingy.active && images.gingy.complete && images.gingy.naturalWidth > 0) {
+        ctx.drawImage(images.gingy, specials.gingy.x, specials.gingy.y, 120, 120);
         ctx.fillStyle = 'rgba(255,255,255,0.12)';
         ctx.fillRect(cameraX, 0, CSS_WIDTH, CSS_HEIGHT);
     }
 
-    // draw enemies (no images, just colored rects)
+    // draw enemies with images
     for (const e of enemies) {
         if (!e.alive) continue;
-        ctx.fillStyle = e.isBoss ? '#800000' : '#b22222';
-        ctx.fillRect(e.x, e.y, e.w, e.h);
-        ctx.fillStyle = '#fff';
-        ctx.font = '12px sans-serif';
-        ctx.fillText(e.isBoss ? 'BOSS' : 'Enemy', e.x - 2, e.y - 6);
+        // draw boss or regular enemy image
+        if (e.isBoss) {
+            if (images.boss1 && images.boss1.complete && images.boss1.naturalWidth > 0) {
+                ctx.drawImage(images.boss1, e.x, e.y, e.w, e.h);
+            } else {
+                ctx.fillStyle = '#800000';
+                ctx.fillRect(e.x, e.y, e.w, e.h);
+            }
+        } else {
+            if (images.enemy && images.enemy.complete && images.enemy.naturalWidth > 0) {
+                ctx.drawImage(images.enemy, e.x, e.y, e.w, e.h);
+            } else {
+                ctx.fillStyle = '#b22222';
+                ctx.fillRect(e.x, e.y, e.w, e.h);
+            }
+        }
+        // draw HP label
         ctx.fillStyle = '#000';
         ctx.font = '10px sans-serif';
-        ctx.fillText(`HP:${e.hp}`, e.x, e.y - 18);
+        ctx.fillText(`HP:${e.hp}`, e.x, e.y - 6);
     }
 
     // draw projectiles
@@ -710,18 +699,16 @@
         ctx.fillRect(p.x - 6, p.y - 3, 12, 6);
     }
 
-    // draw player
-    ctx.save();
-    ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
-    ctx.fillStyle = '#3b7a2b';
-    ctx.fillRect(-player.w / 2, -player.h / 2, player.w, player.h);
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(player.facing * 6 - 6, -player.h / 4, 8, 8);
-    if (player.punching > 0) {
-        ctx.fillStyle = 'rgba(255,200,0,0.9)';
-        ctx.fillRect(player.facing * player.w / 2, -12, player.facing * 24, 12);
+    // draw player with image
+    if (player.punching > 0 && images.player_punch.complete && images.player_punch.naturalWidth > 0) {
+        ctx.drawImage(images.player_punch, player.x, player.y, player.w, player.h);
+    } else if (images.player.complete && images.player.naturalWidth > 0) {
+        ctx.drawImage(images.player, player.x, player.y, player.w, player.h);
+    } else {
+        // fallback colored rect if image fails
+        ctx.fillStyle = '#3b7a2b';
+        ctx.fillRect(player.x, player.y, player.w, player.h);
     }
-    ctx.restore();
 
     ctx.restore();
 
@@ -767,7 +754,6 @@
         ctx.fillText('Press F5 to restart', CSS_WIDTH / 2 - 50, CSS_HEIGHT / 2 + 24);
     }
 }
-
     function loop(ts) {
         console.log('Loop executando...');
         const dt = Math.min(0.033, (ts - last) / 1000);
