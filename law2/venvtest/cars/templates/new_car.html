@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Nossos Carros{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" type="text/css"
+        href="{% static ’css/form.css’ %}">
+{% endblock %}
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="formulario">
+            <table>
+                {{ new_car_form.as_table }}
+            </table>
+        </div>
+        <hr>
+        <div class="envio">
+            <input type="submit" value="Cadastrar" class="btn btn-primary">
+        </div>
+    </form>
+{% endblock %}
