@@ -1,6 +1,5 @@
 from django.shortcuts import redirect, render
 from cars.models import Car
-from law2.venvtest import cars
 from cars.forms import CarModelForm
 from django.shortcuts import redirect, render
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
@@ -28,14 +27,13 @@ def cars_view(request):
 def new_car_view(request):
     if request.method == 'POST':
         new_car_form = CarModelForm(request.POST, request.FILES)
-    if new_car_form.is_valid():
-        new_car_form.save()
-        return redirect('cars_list')
+        if new_car_form.is_valid():
+            new_car_form.save()
+            return redirect('cars_list')
     else:
         #new_car_form = CarForm()
         new_car_form = CarModelForm()
-    return render(request, 'new_car.html',
-                  {'new_car_form': new_car_form})
+        return render(request, 'new_car.html', {'new_car_form': new_car_form})
 
 def register_view(request):
     if request.method == 'POST':
