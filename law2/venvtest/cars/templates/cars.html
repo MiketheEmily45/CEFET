@@ -1,5 +1,6 @@
-{% extends "base.html" %}
+{% extends "base.html"%}
 {% load static %}
+
 {% block title %}Nossos Carros{% endblock %}
 
 {% block styles %}
@@ -12,15 +13,20 @@
         <input type="text" name="search" placeholder="Buscar carro...">
         <button type="submit">Buscar</button>
     </form>
-
     <div class="car-grid">
         {% if cars %}
             {% for car in cars %}
-                <div class="car-card">
-                    <img src="{{ car.photo.url }}" alt="{{ car.model }}{{ car.brand }}">
-                    <h2>{{ car.brand }} {{ car.model }}</h2>
-                    <p>{{ car.factory_year }} - R$ {{ car.value|floatformat:"2g" }}</p>
-                </div>
+                <a href="{% url 'car_detail' car.pk %}">
+                    <div class="car-card">
+                        {% if car.photo %}
+                            <img src="{{ car.photo.url }}" alt="{{ car.model }} - {{ car.brand }}">
+                        {% else %}
+                            <img src="{% static 'img/default-car.png' %}" alt="{{ car.model }} - {{ car.brand }}">
+                        {% endif %}
+                        <h2>{{ car.brand }} {{ car.model }}</h2>
+                        <p>{{ car.factory_year }} - R$ {{ car.value|floatformat:"2g" }}</p>
+                    </div>
+                </a>
             {% endfor %}
         {% else %}
             <p class="no-results">Nenhum carro encontrado.</p>
